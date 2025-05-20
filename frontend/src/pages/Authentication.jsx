@@ -1,117 +1,95 @@
 import { useState, useContext } from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import { AuthContext } from "../contexts/AuthContext";
-import { Snackbar } from "@mui/material";
-import "./../App.css";
 
 export default function Authentication() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState();
-  const [error, setError] = useState();
-  const [message, setMessage] = useState();
-  const [formState, setFormState] = useState(0);
-  const [open, setOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [formState, setFormState] = useState(0); // 0 = login, 1 = signup
 
   const { handleRegister, handleLogin } = useContext(AuthContext);
 
-  let handleAuth = async () => {
+  const handleAuth = async () => {
     try {
       if (formState === 0) {
-        // login
         await handleLogin(username, password);
-      } else if (formState === 1) {
+      } else {
         let result = await handleRegister(name, username, password);
-        setUsername("");
         setMessage(result);
-        setOpen(true);
         setError("");
         setFormState(0);
+        setUsername("");
         setPassword("");
+        setName("");
       }
     } catch (err) {
-      console.log(err);
       let message = err?.response?.data?.message || "Something went wrong";
       setError(message);
     }
   };
 
   return (
-    <div>
-      <div>
-        <Button
-          variant={formState === 0 ? "contained" : ""}
-          onClick={() => {
-            setFormState(0);
-          }}
-        >
-          Sign In
-        </Button>
-        <Button
-          variant={formState === 1 ? "contained" : ""}
-          onClick={() => {
-            setFormState(1);
-          }}
-        >
-          Sign Up
-        </Button>
-      </div>
+    <div className="authPageContainer">
+      <div className="authCard">
+        <h2 className="authTitle">{formState === 0 ? "Sign In" : "Sign Up"}</h2>
 
-      <div>
-        {formState === 1 ? (
-          <TextField
-            margin="normal"
+        <div className="authToggle">
+          <button
+            className={
+              formState === 0 ? "authToggleBtn active" : "authToggleBtn"
+            }
+            onClick={() => setFormState(0)}
+          >
+            Sign In
+          </button>
+          <button
+            className={
+              formState === 1 ? "authToggleBtn active" : "authToggleBtn"
+            }
+            onClick={() => setFormState(1)}
+          >
+            Sign Up
+          </button>
+        </div>
+
+        <form className="authForm" onSubmit={(e) => e.preventDefault()}>
+          {formState === 1 && (
+            <input
+              type="text"
+              className="authInput"
+              placeholder="Full Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          )}
+          <input
+            type="text"
+            className="authInput"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             required
-            fullWidth
-            id="username"
-            label="Full Name"
-            name="username"
-            value={name}
-            autoFocus
-            onChange={(e) => setName(e.target.value)}
           />
-        ) : (
-          <></>
-        )}
+          <input
+            type="password"
+            className="authInput"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          {error && <p className="authError">{error}</p>}
 
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="username"
-          label="Username"
-          name="username"
-          value={username}
-          autoFocus
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Password"
-          value={password}
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-          id="password"
-        />
+          <button className="authSubmitBtn" onClick={handleAuth}>
+            {formState === 0 ? "Login" : "Register"}
+          </button>
 
-        <p style={{ color: "red" }}>{error}</p>
-
-        <Button
-          type="button"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-          onClick={handleAuth}
-        >
-          {formState === 0 ? "Login " : "Register"}
-        </Button>
+          {message && <p className="authSuccess">{message}</p>}
+        </form>
       </div>
-
-      <Snackbar open={open} autoHideDuration={4000} message={message} />
     </div>
   );
 }
