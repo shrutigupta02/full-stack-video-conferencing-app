@@ -2,7 +2,7 @@ import "../App.css";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 export default function Landing() {
-  const router = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <div className="landingPageContainer">
@@ -13,26 +13,18 @@ export default function Landing() {
         <div className="navlist">
           <p
             onClick={() => {
-              router("/");
+              navigate("/");
             }}
           >
             Join as Guest
           </p>
           <p
             onClick={() => {
-              router("/");
+              navigate("/auth");
             }}
           >
-            Register
+            Login
           </p>
-          <div
-            onClick={() => {
-              router("/");
-            }}
-            role="button"
-          >
-            <p>Login</p>
-          </div>
         </div>
       </nav>
 
@@ -41,7 +33,7 @@ export default function Landing() {
         <h2>
           Digital <b>Bridge</b> to Keep You Connected.
         </h2>
-        <div className="button" onClick={() => router("/")}>
+        <div className="button" onClick={() => navigate("/auth")}>
           Get Started
         </div>
       </div>

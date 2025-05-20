@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Authentication() {
   const [username, setUsername] = useState("");
@@ -8,6 +9,8 @@ export default function Authentication() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [formState, setFormState] = useState(0); // 0 = login, 1 = signup
+
+  const navigate = useNavigate();
 
   const { handleRegister, handleLogin } = useContext(AuthContext);
 
@@ -24,6 +27,7 @@ export default function Authentication() {
         setPassword("");
         setName("");
       }
+      navigate("/home");
     } catch (err) {
       let message = err?.response?.data?.message || "Something went wrong";
       setError(message);
