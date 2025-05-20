@@ -8,6 +8,7 @@ function App() {
     <div className="App">
       <Router>
         <AuthProvider>
+          {/* needs to be written inside router because useNavigate function doesnt work outside router*/}
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/auth" element={<Authentication />} />

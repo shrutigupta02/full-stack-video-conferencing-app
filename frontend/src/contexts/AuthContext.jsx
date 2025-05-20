@@ -5,20 +5,24 @@ import httpStatus from "http-status";
 
 export const AuthContext = createContext({});
 
+const client = axios.create({
+  baseURL: "http://localhost:1234/api/v1/users",
+});
+
 export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
 
   const handleRegister = async (name, username, password) => {
     try {
-      const response = await axios.post("/register", {
-        name,
-        username,
-        password,
+      let request = await client.post("/register", {
+        name: name,
+        username: username,
+        password: password,
       });
 
-      if (response.status === httpStatus.CREATED) {
-        return response.data.message;
+      if (request.status === httpStatus.CREATED) {
+        return request.data.message;
       }
     } catch (err) {
       throw err;
@@ -27,13 +31,16 @@ export const AuthProvider = ({ children }) => {
 
   const handleLogin = async (username, password) => {
     try {
-      const response = await axios.post("/login", {
-        username,
-        password,
+      let request = await client.post("/login", {
+        username: username,
+        password: password,
       });
 
-      if (response.status === httpStatus.OK) {
-        localStorage.setItem("token", response.data.token);
+      console.log(username, password);
+      console.log(request.data);
+
+      if (request.status === httpStatus.OK) {
+        localStorage.setItem("token", request.data.token);
         navigate("/home");
       }
     } catch (err) {
@@ -41,9 +48,12 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  return (
-    <AuthContext.Provider value={{ handleRegister, handleLogin }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  const data = {
+    userData,
+    setUserData,
+    handleRegister,
+    handleLogin,
+  };
+
+  return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>;
 };

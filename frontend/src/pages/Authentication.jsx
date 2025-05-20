@@ -74,7 +74,7 @@ export default function Authentication() {
             className="authInput"
             placeholder="Username"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setUsername(e.target.value.toLowerCase())}
             required
           />
           <input
