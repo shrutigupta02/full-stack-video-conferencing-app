@@ -1,28 +1,28 @@
 @font-face {
-  font-family: 'CustomFont';
-  src: url('./assets/font/Barbra-Regular.ttf') format('truetype');
+  font-family: "CustomFont";
+  src: url("./assets/font/Barbra-Regular.ttf") format("truetype");
 }
 
 .landingPageContainer {
   width: 100vw;
   height: 100vh;
-  background: radial-gradient(#82A4D2, #fff);
+  background: radial-gradient(#82a4d2, #fff);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .landingPageContainer nav {
-  width:auto;
+  width: auto;
   display: flex;
   align-items: center;
-  justify-content:space-between;
+  justify-content: space-between;
   margin-inline: 1rem;
 }
 
 .landingPageContainer nav h2 {
   font-size: 2.5rem;
-  font-family: 'CustomFont', sans-serif;
+  font-family: "CustomFont", sans-serif;
   color: #7a6e91;
   font-weight: 500;
 }
@@ -34,13 +34,13 @@
   color: #3b3544;
 }
 
-.landingPageContainer nav .navlist p{
+.landingPageContainer nav .navlist p {
   margin-inline: 1rem;
   cursor: pointer;
 }
 
 .landingMainContainer {
-  width:inherit;
+  width: inherit;
   min-height: 80%;
   display: flex;
   flex-direction: column;
@@ -49,14 +49,14 @@
   margin-inline: 2rem;
 }
 
-.landingMainContainer h2{
+.landingMainContainer h2 {
   text-align: center;
   font-size: 4rem;
   color: #3b3544;
 }
 
-.landingMainContainer .button{
-  background-color: #82A4D2;
+.landingMainContainer .button {
+  background-color: #82a4d2;
   color: #fff;
   text-decoration: none;
   border-radius: 1rem;
@@ -66,13 +66,13 @@
   cursor: pointer;
 }
 
-.landingMainContainer .button:hover{
+.landingMainContainer .button:hover {
   scale: 1.05;
   transition: 1s;
   background-color: #acbfd7;
 }
 
-.footer{
+.footer {
   width: inherit;
   font-size: smaller;
   background-color: #b6cae5;
